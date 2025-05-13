@@ -1,0 +1,16 @@
+CREATE USER 'nruser'@'%' IDENTIFIED BY 'Admin1234';
+GRANT ALL PRIVILEGES ON invernadero.* TO 'nruser'@'%';
+FLUSH PRIVILEGES;
+
+USE invernadero;
+CREATE TABLE mediciones (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  temperatura DECIMAL(5,2) NOT NULL,
+  humedad    DECIMAL(5,2) NOT NULL,
+  fecha_ts   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SHOW DATABASES;
+USE invernadero;
+SHOW TABLES;
+DESCRIBE mediciones;

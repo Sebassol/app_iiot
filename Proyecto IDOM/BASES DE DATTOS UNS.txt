@@ -1,0 +1,75 @@
+Invitado: Julián 
+
+Bases de Datos UNS:
+
+4ta y 5ta revolución industrial, (tratamiento de datos (machine learning) e Inteligencia artificial). permite la inteligencia de producción. 
+
+ciber seguridad, integración, simulaciones, robots e IIOT.
+IIOT es la capacidad de compartir datos a través de información. 
+On primes(local)
+Real time (ETL), (extarct, transformation, load)
+Datta lake -> servidor o lugar donde almaceno toda la cantidad de datos en crudo . 
+Big Datta -> datos procesados. 
+Seguridad informatica SCL o HTTPS
+
+esto es aplicado en sistemas MES (manufacturing, execution, system).
+5 niveles empresariales:
+
+producción
+1. campo   -> sensores y actuadores
+2. control -> plc y dcs
+3. supervisión -> SCADA y HMI
+4. planeación -> MES
+5. administración -> ERP Y CLOUD
+
+PARA LA INTEGRACION DE ESTOS NIVELES SE USA LA BASE DE DATOS UNS (Unified Namespace->topic (en node red).
+
+Uns (Walker Reynolds), es un documento en donde se colocan los tópicos. 
+definición: es un central HUB que almacena estructuras, eventos y estados actuales de la empresa u organización. es una arquitectura que provee y mejora una transformación digital. 
+
+TAXONOMIA UNS
+1. Enterprise
+2. Site
+3. Área
+4. Line
+5. Cell
+
+no se pueden saltar pero si pueden faltar los siguientes. Estándar ISA-95.
+
+Ejemplo de UNS.
+
+Enterprise -> UIS
+Sites -> Sedes central, guatiguara, Barbosa, Barrancabermeja, socorro....
+Area -> Site_Central
+		. Admon
+
+		    1. Contabilidad (linea)
+		    2. Academico (linea) 		
+
+		. Biblioteca
+
+		    1. Inventario (linea)
+
+                    2. Consumo Electrico  (linea)
+
+
+		. Alta Tensión
+		    1. Lab Comunicaciones (linea)
+
+			*servidores (cell)
+			*Espectometro (cell)
+
+		    2. Lab Maquinas (linea)
+
+			* PLC 1.
+			* Motor 3fasico.
+
+       -> Site_Guatiguara…
+
+
+Global_Tech_Measures/Colombia/Bucaramanga/Invernaderos/sensor/Temperatura
+
+
+25.
+
+	
