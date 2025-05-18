@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin
+      MYSQL_DATABASE: invernadero
+      MYSQL_USER: Usuario
+      MYSQL_PASSWORD: Admin1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    networks:
+      - mynetwork
+
+  node-red:
+    build:
+      context: ./node-red
+    container_name: node-red
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered_data:/data
+    depends_on:
+      - mysql
+      - mosquitto
+    networks:
+      - mynetwork
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+      - ./mosquitto/config:/mosquitto/config
+    networks:
+      - mynetwork
+
+volumes:
+  mosquitto_data:
+  mosquitto_log:
+
+networks:
+  mynetwork:
+    driver: bridge

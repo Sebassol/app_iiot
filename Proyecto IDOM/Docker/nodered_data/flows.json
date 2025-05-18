@@ -1,0 +1,348 @@
+[
+    {
+        "id": "4ccffab87c77a982",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "localhost",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c8e80e262f20f672",
+        "type": "MySQLdatabase",
+        "name": "mysql",
+        "host": "mysql",
+        "port": "3306",
+        "db": "invernadero",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "IoT Panel",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "dashboard_group",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "eb42b23b64fbb7eb",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "8385e96d6b45d35f",
+        "type": "mqtt in",
+        "z": "4ccffab87c77a982",
+        "name": "SENSORES",
+        "topic": "Global_Tech_Measures/Colombia/#",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "e043fe0ceb456757",
+                "691ad6ad944a7842",
+                "0e48fe92b1966954"
+            ]
+        ]
+    },
+    {
+        "id": "e043fe0ceb456757",
+        "type": "ui_gauge",
+        "z": "4ccffab87c77a982",
+        "name": "Gauge Temp",
+        "group": "dashboard_group",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 410,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "691ad6ad944a7842",
+        "type": "ui_chart",
+        "z": "4ccffab87c77a982",
+        "name": "Chart Temp",
+        "group": "dashboard_group",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura Historico",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#ff0000",
+            "#00ff00",
+            "#0000ff"
+        ],
+        "outputs": 1,
+        "x": 410,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0e48fe92b1966954",
+        "type": "json",
+        "z": "4ccffab87c77a982",
+        "name": "conversion_datta",
+        "property": "payload",
+        "action": "obj",
+        "pretty": true,
+        "x": 430,
+        "y": 240,
+        "wires": [
+            [
+                "ce1538845b0f1c3f"
+            ]
+        ]
+    },
+    {
+        "id": "ce1538845b0f1c3f",
+        "type": "switch",
+        "z": "4ccffab87c77a982",
+        "name": "Clasificacion por ubicacion",
+        "property": "payload.ubicacion",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "bucaramanga",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "medellin",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Bogota",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 680,
+        "y": 200,
+        "wires": [
+            [
+                "c086668e4dc5ee73"
+            ],
+            [
+                "c086668e4dc5ee73"
+            ],
+            [
+                "c086668e4dc5ee73"
+            ]
+        ]
+    },
+    {
+        "id": "41cb7928ad876609",
+        "type": "mysql",
+        "z": "4ccffab87c77a982",
+        "mydb": "c8e80e262f20f672",
+        "name": "Invernadero_Datta",
+        "x": 1030,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c086668e4dc5ee73",
+        "type": "function",
+        "z": "4ccffab87c77a982",
+        "name": "Construccion_dattabase",
+        "func": "msg.topic = `\n  INSERT INTO mediciones (\n    temperatura, humedad,\n    led_humedad, led_temperatura,\n    buzzer_humedad, buzzer_temperatura,\n    ubicacion\n  ) VALUES (?, ?, ?, ?, ?, ?, ?)\n`;\n\nmsg.payload = [\n  msg.payload.temperatura,\n  msg.payload.humedad,\n  msg.payload.led_humedad,\n  msg.payload.led_temperatura,\n  msg.payload.buzzer_humedad,\n  msg.payload.buzzer_temperatura,\n  msg.payload.ubicacion\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 220,
+        "wires": [
+            [
+                "fc987663594b2850",
+                "41cb7928ad876609"
+            ]
+        ]
+    },
+    {
+        "id": "fc987663594b2850",
+        "type": "debug",
+        "z": "4ccffab87c77a982",
+        "name": "Debug Temp",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1270,
+        "y": 160,
+        "wires": []
+    }
+]

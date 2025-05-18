@@ -6,9 +6,14 @@
 const char* ssid = "Sebastian";
 const char* password = "sebasTsol";
 
+//const char* ssid = "OLIVER-Y-THIRION";
+//const char* password = "SebasTsol120";
 
-const char* mqtt_server = "52.224.5.206"; // IP de tu PC con Mosquitto esta seria la de la maquina virtual 
 
+
+const char* mqtt_server="190.13.56.149";//ip casa felipe 
+//const char* mqtt_server = "52.224.5.206"; // IP de tu PC con Mosquitto esta seria la de la maquina virtual 
+//const char* mqtt_server = "192.168.20.73"; //IP PC SEBAS CASA SEBAS
 
 #define DHTPIN 4       // Pin donde conectaste el DHT11
 #define DHTTYPE DHT11
@@ -35,7 +40,7 @@ void setup_wifi() {
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Intentando conexión MQTT... ");
-    if (client.connect("ESP32Client")) {
+    if (client.connect("ESP32Client", "Usuario", "Admin1234")){
       Serial.println("Conectado ✅");
     } else {
       Serial.print("Fallo, rc=");
@@ -59,6 +64,11 @@ void setup() {
 }
 
 void loop() {
+    // Simulación de actuadores
+  int ledH = 0;
+  int ledT = 0;
+  int buzH = 0;
+  int buzT = 0;
   if (!client.connected()) {
     reconnect();
   }
@@ -73,9 +83,18 @@ void loop() {
     return;
   }
 
-  // 📤 Publicar datos reales
-  client.publish("Global_Tech_Measures/Colombia/Bucaramanga/Invernaderos/sensor/Temperatura", String(temp).c_str());
-  client.publish("Global_Tech_Measures/Colombia/Bucaramanga/Invernaderos/sensor/Humedad", String(hum).c_str());
+  String payload = "{";
+  payload += "\"temperatura\":" + String(temp, 2) + ",";
+  payload += "\"humedad\":" + String(hum, 2) + ",";
+  payload += "\"led_humedad\":" + String(ledH) + ",";
+  payload += "\"led_temperatura\":" + String(ledT) + ",";
+  payload += "\"buzzer_humedad\":" + String(buzH) + ",";
+  payload += "\"buzzer_temperatura\":" + String(buzT) + ",";
+  payload += "\"ubicacion\":\"bucaramanga\"";
+  payload += "}";
+
+client.publish("Global_Tech_Measures/Colombia/Bucaramanga/Invernaderos/sensorA", payload.c_str());
+
 
   Serial.printf("Temp: %.1f°C | Hum: %.1f%%\n", temp, hum);
   delay(5000); // Esperar 5s
