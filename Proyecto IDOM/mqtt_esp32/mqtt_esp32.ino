@@ -3,17 +3,14 @@
 #include <DHT.h>
 
 //conexion a internet en donde se va a instalar el sensor debe estar a una red de internet de 2.4hz porque es la unica frecuencia aceptable para ESP-32
-const char* ssid = "Sebastian";
-const char* password = "sebasTsol";
+//const char* ssid = "Sebastian";
+//const char* password = "sebasTsol";
 
-//const char* ssid = "OLIVER-Y-THIRION";
-//const char* password = "SebasTsol120";
+const char* ssid = "OLIVER-Y-THIRION";
+const char* password = "SebasTsol120";
 
-
-
-const char* mqtt_server="190.13.56.149";//ip casa felipe 
-//const char* mqtt_server = "52.224.5.206"; // IP de tu PC con Mosquitto esta seria la de la maquina virtual 
-//const char* mqtt_server = "192.168.20.73"; //IP PC SEBAS CASA SEBAS
+ 
+const char* mqtt_server = "192.168.20.73"; //IP PC SEBAS CASA SEBAS
 
 #define DHTPIN 4       // Pin donde conectaste el DHT11
 #define DHTTYPE DHT11

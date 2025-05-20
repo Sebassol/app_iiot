@@ -1,5 +1,616 @@
 [
     {
+        "id": "ec4a744095b7654c",
+        "type": "subflow",
+        "name": "Subflow 3",
+        "info": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "8de8492f5e0f0426"
+                    }
+                ]
+            }
+        ],
+        "out": []
+    },
+    {
+        "id": "8de8492f5e0f0426",
+        "type": "function",
+        "z": "ec4a744095b7654c",
+        "name": "extraer_datos",
+        "func": "var tempMsg = {\n    payload: msg.payload.temperatura,\n    ubicacion: msg.payload.ubicacion\n};\n\nvar humMsg = {\n    payload: msg.payload.humedad,\n    ubicacion: msg.payload.ubicacion\n};\n\nreturn [tempMsg, humMsg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "42f349e55afcfc28",
+                "39ffe97e5be46c24"
+            ],
+            [
+                "2b69a216056bfc74",
+                "e95972b461a4120e"
+            ]
+        ]
+    },
+    {
+        "id": "42f349e55afcfc28",
+        "type": "ui_gauge",
+        "z": "ec4a744095b7654c",
+        "name": "Temp Bogota",
+        "group": "79443584395e60c2",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "Temperatura - {{msg.ubicacion}}",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 490,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "39ffe97e5be46c24",
+        "type": "ui_chart",
+        "z": "ec4a744095b7654c",
+        "name": "Historico Temp Bogota",
+        "group": "79443584395e60c2",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Temperatura - {{msg.ubicacion}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 520,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e95972b461a4120e",
+        "type": "ui_gauge",
+        "z": "ec4a744095b7654c",
+        "name": "Hum Bogota",
+        "group": "79443584395e60c2",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humedad - {{msg.ubicacion}}",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 490,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "2b69a216056bfc74",
+        "type": "ui_chart",
+        "z": "ec4a744095b7654c",
+        "name": "Historico Hum Bogota",
+        "group": "79443584395e60c2",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Humedad - {{msg.ubicacion}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 520,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "79443584395e60c2",
+        "type": "ui_group",
+        "name": "Bogotá",
+        "tab": "dashboard_tab",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7ca09655453ec336",
+        "type": "subflow",
+        "name": "Subflow 2",
+        "info": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "defc56080a5f7cad"
+                    }
+                ]
+            }
+        ],
+        "out": []
+    },
+    {
+        "id": "defc56080a5f7cad",
+        "type": "function",
+        "z": "7ca09655453ec336",
+        "name": "extraer_datos",
+        "func": "var tempMsg = {\n    payload: msg.payload.temperatura,\n    ubicacion: msg.payload.ubicacion\n};\n\nvar humMsg = {\n    payload: msg.payload.humedad,\n    ubicacion: msg.payload.ubicacion\n};\n\nreturn [tempMsg, humMsg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "9ee9e4bc0d0da492",
+                "08eede454fde31d9"
+            ],
+            [
+                "8c8513ec540cf249",
+                "9869dd5702a7e596"
+            ]
+        ]
+    },
+    {
+        "id": "9ee9e4bc0d0da492",
+        "type": "ui_gauge",
+        "z": "7ca09655453ec336",
+        "name": "Temp Medellin",
+        "group": "f484e611365fc120",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "Temperatura - {{msg.ubicacion}}",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 440,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "08eede454fde31d9",
+        "type": "ui_chart",
+        "z": "7ca09655453ec336",
+        "name": "Historico Temp Medellin",
+        "group": "f484e611365fc120",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Temperatura - {{msg.ubicacion}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 470,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9869dd5702a7e596",
+        "type": "ui_gauge",
+        "z": "7ca09655453ec336",
+        "name": "Hum Medellin",
+        "group": "f484e611365fc120",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humedad - {{msg.ubicacion}}",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 440,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8c8513ec540cf249",
+        "type": "ui_chart",
+        "z": "7ca09655453ec336",
+        "name": "Historico Hum  Medellin",
+        "group": "f484e611365fc120",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Humedad - {{msg.ubicacion}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 470,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f484e611365fc120",
+        "type": "ui_group",
+        "name": "Medellin",
+        "tab": "dashboard_tab",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "47de383cc0ac388a",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "4ddcc85518ada872"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "ui_group",
+                "type": "str",
+                "value": "IoT Panel/Bucaramanga"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "4ddcc85518ada872",
+        "type": "function",
+        "z": "47de383cc0ac388a",
+        "name": "extraer_datos",
+        "func": "var tempMsg = {\n    payload: msg.payload.temperatura,\n    ubicacion: msg.payload.ubicacion\n};\n\nvar humMsg = {\n    payload: msg.payload.humedad,\n    ubicacion: msg.payload.ubicacion\n};\n\nreturn [tempMsg, humMsg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "b6111c13bd0c9e71",
+                "7dba5ea638360137"
+            ],
+            [
+                "dc481ac78ca6fcd8",
+                "13434ea6d1249598"
+            ]
+        ]
+    },
+    {
+        "id": "b6111c13bd0c9e71",
+        "type": "ui_gauge",
+        "z": "47de383cc0ac388a",
+        "name": "Temp Medellin",
+        "group": "b0996f3e36c8571c",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "Temperatura - {{msg.ubicacion}}",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 500,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7dba5ea638360137",
+        "type": "ui_chart",
+        "z": "47de383cc0ac388a",
+        "name": "Historico Temp Medellin",
+        "group": "b0996f3e36c8571c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Temperatura - {{msg.ubicacion}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 530,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "13434ea6d1249598",
+        "type": "ui_gauge",
+        "z": "47de383cc0ac388a",
+        "name": "Hum Medellin",
+        "group": "b0996f3e36c8571c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humedad - {{msg.ubicacion}}",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 500,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "dc481ac78ca6fcd8",
+        "type": "ui_chart",
+        "z": "47de383cc0ac388a",
+        "name": "Historico Hum  Medellin",
+        "group": "b0996f3e36c8571c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Humedad - {{msg.ubicacion}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 530,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b0996f3e36c8571c",
+        "type": "ui_group",
+        "name": "Bucaramanga",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "IoT Panel",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
         "id": "4ccffab87c77a982",
         "type": "tab",
         "label": "Flow 1",
@@ -20,77 +631,13 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 130,
-        "y": 320,
-        "wires": [
-            [
-                "e043fe0ceb456757",
-                "691ad6ad944a7842",
-                "0e48fe92b1966954"
-            ]
-        ]
-    },
-    {
-        "id": "e043fe0ceb456757",
-        "type": "ui_gauge",
-        "z": "4ccffab87c77a982",
-        "name": "Gauge Temp",
-        "group": "dashboard_group",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Temperatura",
-        "label": "°C",
-        "format": "{{value}}",
-        "min": "0",
-        "max": "50",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "className": "",
-        "x": 410,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "691ad6ad944a7842",
-        "type": "ui_chart",
-        "z": "4ccffab87c77a982",
-        "name": "Chart Temp",
-        "group": "dashboard_group",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "label": "Temperatura Historico",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm:ss",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "0",
-        "ymax": "50",
-        "removeOlder": 1,
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#ff0000",
-            "#00ff00",
-            "#0000ff"
-        ],
-        "outputs": 1,
-        "x": 410,
+        "x": 170,
         "y": 380,
         "wires": [
-            []
+            [
+                "0e48fe92b1966954",
+                "23cfe36d4cddbf06"
+            ]
         ]
     },
     {
@@ -101,8 +648,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": true,
-        "x": 430,
-        "y": 240,
+        "x": 370,
+        "y": 380,
         "wires": [
             [
                 "ce1538845b0f1c3f"
@@ -136,30 +683,21 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 680,
-        "y": 200,
-        "wires": [
-            [
-                "c086668e4dc5ee73"
-            ],
-            [
-                "c086668e4dc5ee73"
-            ],
-            [
-                "c086668e4dc5ee73"
-            ]
-        ]
-    },
-    {
-        "id": "41cb7928ad876609",
-        "type": "mysql",
-        "z": "4ccffab87c77a982",
-        "mydb": "c8e80e262f20f672",
-        "name": "Invernadero_Datta",
-        "x": 1030,
+        "x": 620,
         "y": 380,
         "wires": [
-            []
+            [
+                "c086668e4dc5ee73",
+                "88a65036ab76ad66"
+            ],
+            [
+                "c086668e4dc5ee73",
+                "5a511fd949701910"
+            ],
+            [
+                "c086668e4dc5ee73",
+                "b41da67bee91b5e6"
+            ]
         ]
     },
     {
@@ -167,39 +705,100 @@
         "type": "function",
         "z": "4ccffab87c77a982",
         "name": "Construccion_dattabase",
-        "func": "msg.topic = `\n  INSERT INTO mediciones (\n    temperatura, humedad,\n    led_humedad, led_temperatura,\n    buzzer_humedad, buzzer_temperatura,\n    ubicacion\n  ) VALUES (?, ?, ?, ?, ?, ?, ?)\n`;\n\nmsg.payload = [\n  msg.payload.temperatura,\n  msg.payload.humedad,\n  msg.payload.led_humedad,\n  msg.payload.led_temperatura,\n  msg.payload.buzzer_humedad,\n  msg.payload.buzzer_temperatura,\n  msg.payload.ubicacion\n];\n\nreturn msg;",
+        "func": "msg.topic = `\n  INSERT INTO datos_invernadero (\n    temperatura, humedad,\n    led_humedad, led_temperatura,\n    buzzer_humedad, buzzer_temperatura,\n    ubicacion\n  ) VALUES (?, ?, ?, ?, ?, ?, ?)\n`;\n\nmsg.payload = [\n  msg.payload.temperatura,\n  msg.payload.humedad,\n  msg.payload.led_humedad,\n  msg.payload.led_temperatura,\n  msg.payload.buzzer_humedad,\n  msg.payload.buzzer_temperatura,\n  msg.payload.ubicacion\n];\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 970,
-        "y": 220,
+        "x": 910,
+        "y": 380,
         "wires": [
             [
-                "fc987663594b2850",
-                "41cb7928ad876609"
+                "7b5f715f8fd3d005",
+                "8bf35073cdd890f7"
             ]
         ]
     },
     {
-        "id": "fc987663594b2850",
+        "id": "7b5f715f8fd3d005",
         "type": "debug",
         "z": "4ccffab87c77a982",
-        "name": "Debug Temp",
+        "name": "Debug Hum",
         "active": true,
-        "console": "false",
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
         "complete": "payload",
-        "x": 1270,
-        "y": 160,
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "88a65036ab76ad66",
+        "type": "subflow:47de383cc0ac388a",
+        "z": "4ccffab87c77a982",
+        "name": "Dash_Bucaramanga",
+        "x": 920,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5a511fd949701910",
+        "type": "subflow:7ca09655453ec336",
+        "z": "4ccffab87c77a982",
+        "name": "Dash Medellin",
+        "x": 900,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b41da67bee91b5e6",
+        "type": "subflow:ec4a744095b7654c",
+        "z": "4ccffab87c77a982",
+        "name": "Dash Bogota",
+        "x": 890,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "8bf35073cdd890f7",
+        "type": "mysql",
+        "z": "4ccffab87c77a982",
+        "mydb": "3bdd2c7d70ca813c",
+        "name": "Invernadero_Datta",
+        "x": 1170,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "23cfe36d4cddbf06",
+        "type": "debug",
+        "z": "4ccffab87c77a982",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 180,
         "wires": []
     },
     {
         "id": "mqtt_broker",
         "type": "mqtt-broker",
         "name": "localhost",
-        "broker": "mosquitto",
+        "broker": "192.168.20.73",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
@@ -223,30 +822,13 @@
         "sessionExpiry": ""
     },
     {
-        "id": "dashboard_group",
-        "type": "ui_group",
-        "name": "Dashboard",
-        "tab": "dashboard_tab",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "c8e80e262f20f672",
+        "id": "3bdd2c7d70ca813c",
         "type": "MySQLdatabase",
-        "name": "mysql",
-        "host": "mysql",
-        "port": "3306",
-        "db": "invernadero",
+        "name": "Datta_invernadero",
+        "host": "nozomi.proxy.rlwy.net",
+        "port": "56079",
+        "db": "railway",
         "tz": "",
         "charset": "UTF8"
-    },
-    {
-        "id": "dashboard_tab",
-        "type": "ui_tab",
-        "name": "IoT Panel",
-        "icon": "dashboard",
-        "order": 1
     }
 ]

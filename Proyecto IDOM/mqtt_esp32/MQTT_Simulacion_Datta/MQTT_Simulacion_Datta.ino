@@ -5,6 +5,10 @@
 const char* ssid = "OLIVER-Y-THIRION";
 const char* password = "SebasTsol120";
 
+//const char* ssid = "Sebastian";
+//const char* password = "sebasTsol";
+
+
 const char* mqtt_server = "192.168.20.73"; // Cambia esto si es necesario
 
 WiFiClient espClient;
@@ -27,7 +31,7 @@ void setup_wifi() {
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Intentando conexión MQTT... ");
-    if (client.connect("ESP32Client", "Usuario", "Admin1234")) {
+   if (client.connect("ESP32Client", "Usuario", "Admin1234")) {
       Serial.println("Conectado ✅");
     } else {
       Serial.print("Fallo, rc=");
@@ -54,10 +58,10 @@ void loop() {
   client.loop();
 
   // Simular datos para 2 sensores
-  float tempB = getRandom(24.0, 32.0);
-  float humB  = getRandom(40.0, 80.0);
-  float tempC = getRandom(20.0, 30.0);
-  float humC  = getRandom(35.0, 75.0);
+  float tempB = getRandom(11.2, 13.0);
+  float humB  = getRandom(66.0, 84.0);
+  float tempC = getRandom(11.6, 16.0);
+  float humC  = getRandom(80.0, 89.0);
 
   int ledH = 0;
   int ledT = 0;
