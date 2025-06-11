@@ -82,7 +82,7 @@
         "id": "mqtt_broker",
         "type": "mqtt-broker",
         "name": "localhost",
-        "broker": "192.168.20.73",
+        "broker": "192.168.215.184",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
@@ -106,7 +106,7 @@
         "sessionExpiry": ""
     },
     {
-        "id": "3bdd2c7d70ca813c",
+        "id": "57d1cb3d96379099",
         "type": "MySQLdatabase",
         "name": "Datta_invernadero",
         "host": "nozomi.proxy.rlwy.net",
@@ -149,7 +149,7 @@
         "className": ""
     },
     {
-        "id": "04d150cf3a2bec1f",
+        "id": "f46106810e0421d7",
         "type": "ui_base",
         "theme": {
             "name": "theme-light",
@@ -768,8 +768,7 @@
         "y": 380,
         "wires": [
             [
-                "0e48fe92b1966954",
-                "23cfe36d4cddbf06"
+                "0e48fe92b1966954"
             ]
         ]
     },
@@ -838,7 +837,7 @@
         "type": "function",
         "z": "4ccffab87c77a982",
         "name": "Construccion_dattabase",
-        "func": "msg.topic = `\n  INSERT INTO datos_invernadero (\n    temperatura, humedad,\n    led_humedad, led_temperatura,\n    buzzer_humedad, buzzer_temperatura,\n    ubicacion\n  ) VALUES (?, ?, ?, ?, ?, ?, ?)\n`;\n\nmsg.payload = [\n  msg.payload.temperatura,\n  msg.payload.humedad,\n  msg.payload.led_humedad,\n  msg.payload.led_temperatura,\n  msg.payload.buzzer_humedad,\n  msg.payload.buzzer_temperatura,\n  msg.payload.ubicacion\n];\n\nreturn msg;",
+        "func": "msg.topic = `\n  INSERT INTO datos_invernadero (\n    fecha_hora,\n    temperatura, humedad,\n    led_humedad, led_temperatura,\n    buzzer_humedad, buzzer_temperatura,\n    ubicacion\n  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)\n`;\n\nmsg.payload = [\n  msg.payload.fecha_hora,\n  msg.payload.temperatura,\n  msg.payload.humedad,\n  msg.payload.led_humedad,\n  msg.payload.led_temperatura,\n  msg.payload.buzzer_humedad,\n  msg.payload.buzzer_temperatura,\n  msg.payload.ubicacion\n];\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -849,27 +848,9 @@
         "y": 380,
         "wires": [
             [
-                "7b5f715f8fd3d005",
                 "8bf35073cdd890f7"
             ]
         ]
-    },
-    {
-        "id": "7b5f715f8fd3d005",
-        "type": "debug",
-        "z": "4ccffab87c77a982",
-        "name": "Debug Hum",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1150,
-        "y": 320,
-        "wires": []
     },
     {
         "id": "88a65036ab76ad66",
@@ -902,29 +883,12 @@
         "id": "8bf35073cdd890f7",
         "type": "mysql",
         "z": "4ccffab87c77a982",
-        "mydb": "3bdd2c7d70ca813c",
+        "mydb": "57d1cb3d96379099",
         "name": "Invernadero_Datta",
         "x": 1170,
-        "y": 420,
+        "y": 440,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "23cfe36d4cddbf06",
-        "type": "debug",
-        "z": "4ccffab87c77a982",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 420,
-        "y": 180,
-        "wires": []
     }
 ]

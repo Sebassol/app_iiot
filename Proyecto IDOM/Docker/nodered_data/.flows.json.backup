@@ -1,5 +1,13 @@
 [
     {
+        "id": "4ccffab87c77a982",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "ec4a744095b7654c",
         "type": "subflow",
         "name": "Subflow 3",
@@ -16,6 +24,225 @@
             }
         ],
         "out": []
+    },
+    {
+        "id": "7ca09655453ec336",
+        "type": "subflow",
+        "name": "Subflow 2",
+        "info": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "defc56080a5f7cad"
+                    }
+                ]
+            }
+        ],
+        "out": []
+    },
+    {
+        "id": "47de383cc0ac388a",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "4ddcc85518ada872"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "ui_group",
+                "type": "str",
+                "value": "IoT Panel/Bucaramanga"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "IoT Panel",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "localhost",
+        "broker": "192.168.20.73",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "57d1cb3d96379099",
+        "type": "MySQLdatabase",
+        "name": "Datta_invernadero",
+        "host": "nozomi.proxy.rlwy.net",
+        "port": "56079",
+        "db": "railway",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "79443584395e60c2",
+        "type": "ui_group",
+        "name": "Bogotá",
+        "tab": "dashboard_tab",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f484e611365fc120",
+        "type": "ui_group",
+        "name": "Medellin",
+        "tab": "dashboard_tab",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b0996f3e36c8571c",
+        "type": "ui_group",
+        "name": "Bucaramanga",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f46106810e0421d7",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
     },
     {
         "id": "8de8492f5e0f0426",
@@ -187,35 +414,6 @@
         ]
     },
     {
-        "id": "79443584395e60c2",
-        "type": "ui_group",
-        "name": "Bogotá",
-        "tab": "dashboard_tab",
-        "order": 3,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "7ca09655453ec336",
-        "type": "subflow",
-        "name": "Subflow 2",
-        "info": "",
-        "in": [
-            {
-                "x": 60,
-                "y": 160,
-                "wires": [
-                    {
-                        "id": "defc56080a5f7cad"
-                    }
-                ]
-            }
-        ],
-        "out": []
-    },
-    {
         "id": "defc56080a5f7cad",
         "type": "function",
         "z": "7ca09655453ec336",
@@ -383,45 +581,6 @@
         "wires": [
             []
         ]
-    },
-    {
-        "id": "f484e611365fc120",
-        "type": "ui_group",
-        "name": "Medellin",
-        "tab": "dashboard_tab",
-        "order": 2,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "47de383cc0ac388a",
-        "type": "subflow",
-        "name": "Subflow 1",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 60,
-                "y": 140,
-                "wires": [
-                    {
-                        "id": "4ddcc85518ada872"
-                    }
-                ]
-            }
-        ],
-        "out": [],
-        "env": [
-            {
-                "name": "ui_group",
-                "type": "str",
-                "value": "IoT Panel/Bucaramanga"
-            }
-        ],
-        "meta": {},
-        "color": "#DDAA99"
     },
     {
         "id": "4ddcc85518ada872",
@@ -593,32 +752,6 @@
         ]
     },
     {
-        "id": "b0996f3e36c8571c",
-        "type": "ui_group",
-        "name": "Bucaramanga",
-        "tab": "dashboard_tab",
-        "order": 1,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "dashboard_tab",
-        "type": "ui_tab",
-        "name": "IoT Panel",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "4ccffab87c77a982",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "8385e96d6b45d35f",
         "type": "mqtt in",
         "z": "4ccffab87c77a982",
@@ -635,8 +768,7 @@
         "y": 380,
         "wires": [
             [
-                "0e48fe92b1966954",
-                "23cfe36d4cddbf06"
+                "0e48fe92b1966954"
             ]
         ]
     },
@@ -705,7 +837,7 @@
         "type": "function",
         "z": "4ccffab87c77a982",
         "name": "Construccion_dattabase",
-        "func": "msg.topic = `\n  INSERT INTO datos_invernadero (\n    temperatura, humedad,\n    led_humedad, led_temperatura,\n    buzzer_humedad, buzzer_temperatura,\n    ubicacion\n  ) VALUES (?, ?, ?, ?, ?, ?, ?)\n`;\n\nmsg.payload = [\n  msg.payload.temperatura,\n  msg.payload.humedad,\n  msg.payload.led_humedad,\n  msg.payload.led_temperatura,\n  msg.payload.buzzer_humedad,\n  msg.payload.buzzer_temperatura,\n  msg.payload.ubicacion\n];\n\nreturn msg;",
+        "func": "msg.topic = `\n  INSERT INTO datos_invernadero (\n    fecha_hora,\n    temperatura, humedad,\n    led_humedad, led_temperatura,\n    buzzer_humedad, buzzer_temperatura,\n    ubicacion\n  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)\n`;\n\nmsg.payload = [\n  msg.payload.fecha_hora,\n  msg.payload.temperatura,\n  msg.payload.humedad,\n  msg.payload.led_humedad,\n  msg.payload.led_temperatura,\n  msg.payload.buzzer_humedad,\n  msg.payload.buzzer_temperatura,\n  msg.payload.ubicacion\n];\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -716,27 +848,9 @@
         "y": 380,
         "wires": [
             [
-                "7b5f715f8fd3d005",
                 "8bf35073cdd890f7"
             ]
         ]
-    },
-    {
-        "id": "7b5f715f8fd3d005",
-        "type": "debug",
-        "z": "4ccffab87c77a982",
-        "name": "Debug Hum",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1150,
-        "y": 320,
-        "wires": []
     },
     {
         "id": "88a65036ab76ad66",
@@ -769,66 +883,12 @@
         "id": "8bf35073cdd890f7",
         "type": "mysql",
         "z": "4ccffab87c77a982",
-        "mydb": "3bdd2c7d70ca813c",
+        "mydb": "57d1cb3d96379099",
         "name": "Invernadero_Datta",
         "x": 1170,
-        "y": 420,
+        "y": 440,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "23cfe36d4cddbf06",
-        "type": "debug",
-        "z": "4ccffab87c77a982",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 420,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "mqtt_broker",
-        "type": "mqtt-broker",
-        "name": "localhost",
-        "broker": "192.168.20.73",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "3bdd2c7d70ca813c",
-        "type": "MySQLdatabase",
-        "name": "Datta_invernadero",
-        "host": "nozomi.proxy.rlwy.net",
-        "port": "56079",
-        "db": "railway",
-        "tz": "",
-        "charset": "UTF8"
     }
 ]

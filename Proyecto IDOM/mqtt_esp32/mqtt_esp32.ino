@@ -1,98 +1,80 @@
-#include <WiFi.h>
-#include <PubSubClient.h>
-#include <DHT.h>
+#include <BluetoothSerial.h>
+BluetoothSerial SerialBT;
 
-//conexion a internet en donde se va a instalar el sensor debe estar a una red de internet de 2.4hz porque es la unica frecuencia aceptable para ESP-32
-//const char* ssid = "Sebastian";
-//const char* password = "sebasTsol";
+enum Modo { AUTOMATICO, MANUAL };
+enum Rango { MICRO, MILI };
 
-const char* ssid = "OLIVER-Y-THIRION";
-const char* password = "SebasTsol120";
+Modo modo = AUTOMATICO;
+Rango rango_manual = MICRO;
 
- 
-const char* mqtt_server = "192.168.20.73"; //IP PC SEBAS CASA SEBAS
-
-#define DHTPIN 4       // Pin donde conectaste el DHT11
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
-
-WiFiClient espClient;
-PubSubClient client(espClient);
-
-void setup_wifi() {
-  delay(100);
-  Serial.begin(115200);
-  WiFi.begin(ssid, password);
-  Serial.print("Conectando a WiFi");
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("\nWiFi conectado ✅");
-  Serial.print("Conectado al WiFi con IP: ");
-  Serial.println(WiFi.localIP());
-
-}
-
-void reconnect() {
-  while (!client.connected()) {
-    Serial.print("Intentando conexión MQTT... ");
-    if (client.connect("ESP32Client", "Usuario", "Admin1234")){
-      Serial.println("Conectado ✅");
-    } else {
-      Serial.print("Fallo, rc=");
-      Serial.print(client.state());
-      Serial.print(" - ");
-      switch (client.state()) {
-        case -4: Serial.println("Timeout"); break;
-        case -2: Serial.println("Conexión rechazada"); break;
-        case -1: Serial.println("Cliente desconectado"); break;
-        default: Serial.println("Error desconocido");
-      }
-      delay(5000);
-    }
-  }
-}
+unsigned long tiempo_ultimo_cambio = 0;
+const unsigned long intervalo_cambio = 10000; // 10 segundos
 
 void setup() {
-  setup_wifi();
-  client.setServer(mqtt_server, 1883);
-  dht.begin();
+  Serial.begin(115200);
+  SerialBT.begin("ESP32Sensor"); // Nombre Bluetooth
+  Serial.println("Bluetooth iniciado");
+
+  tiempo_ultimo_cambio = millis();
 }
 
 void loop() {
-    // Simulación de actuadores
-  int ledH = 0;
-  int ledT = 0;
-  int buzH = 0;
-  int buzT = 0;
-  if (!client.connected()) {
-    reconnect();
+  // Revisar si llegó comando por Bluetooth para cambiar modo o rango
+  if (SerialBT.available()) {
+    char c = SerialBT.read();
+    if (c == 'A') {       // Automático
+      modo = AUTOMATICO;
+      Serial.println("Modo AUTOMATICO");
+    } else if (c == 'M') { // Manual
+      modo = MANUAL;
+      Serial.println("Modo MANUAL");
+    } else if (c == '0') { // Rango microamperios
+      rango_manual = MICRO;
+      Serial.println("Rango MANUAL: MICRO");
+    } else if (c == '1') { // Rango miliamperios
+      rango_manual = MILI;
+      Serial.println("Rango MANUAL: MILI");
+    }
   }
-  client.loop();
 
-  // 🌡️ Leer sensores
-  float temp = dht.readTemperature();
-  float hum = dht.readHumidity();
+  float corriente = 0.0;
 
-  if (isnan(temp) || isnan(hum)) {
-    Serial.println("❌ Error al leer el DHT11");
-    return;
+  if (modo == AUTOMATICO) {
+    // Cambiar rango cada 10 segundos
+    if (millis() - tiempo_ultimo_cambio >= intervalo_cambio) {
+      if (rango_manual == MICRO) rango_manual = MILI;
+      else rango_manual = MICRO;
+      tiempo_ultimo_cambio = millis();
+    }
+
+    // Generar corriente aleatoria según rango actual
+    if (rango_manual == MICRO) {
+      // Microamperios entre 5 y 10
+      corriente = random(5000, 10001) / 1000.0; // µA
+    } else {
+      // Miliamperios entre 0 y 10
+      corriente = random(0, 10001) / 1000.0; // mA
+    }
+  } else {
+    // Modo manual: corriente fija según rango manual
+    if (rango_manual == MICRO) {
+      // Entre 5 y 10 microamperios
+      corriente = random(5000, 10001) / 1000.0; // µA
+    } else {
+      // Entre 0 y 10 miliamperios
+      corriente = random(0, 10001) / 1000.0; // mA
+    }
   }
 
-  String payload = "{";
-  payload += "\"temperatura\":" + String(temp, 2) + ",";
-  payload += "\"humedad\":" + String(hum, 2) + ",";
-  payload += "\"led_humedad\":" + String(ledH) + ",";
-  payload += "\"led_temperatura\":" + String(ledT) + ",";
-  payload += "\"buzzer_humedad\":" + String(buzH) + ",";
-  payload += "\"buzzer_temperatura\":" + String(buzT) + ",";
-  payload += "\"ubicacion\":\"bucaramanga\"";
-  payload += "}";
+  // Enviar dato formateado como texto Bluetooth (por ejemplo: "MICRO:7.2" o "MILI:4.3")
+  String textoEnviar = "";
+  if (rango_manual == MICRO) {
+    textoEnviar = String(corriente, 3)+" [uA]";  // 3 decimales
+  } else {
+    textoEnviar = String(corriente, 3)+" [mA]";
+  }
+  SerialBT.println(textoEnviar);
 
-client.publish("Global_Tech_Measures/Colombia/Bucaramanga/Invernaderos/sensorA", payload.c_str());
-
-
-  Serial.printf("Temp: %.1f°C | Hum: %.1f%%\n", temp, hum);
-  delay(5000); // Esperar 5s
+  delay(1000); // Enviar dato cada 1 segundo
 }
+
