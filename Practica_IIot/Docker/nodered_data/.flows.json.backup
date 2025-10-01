@@ -1,0 +1,182 @@
+[
+    {
+        "id": "mqtt_in_receipt",
+        "type": "mqtt in",
+        "z": "flow_main",
+        "name": "MQTT - Clase/Iot/Cmos/#",
+        "topic": "Clase/Iot/Cmos/#",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 140,
+        "wires": [
+            [
+                "func_extract_code"
+            ]
+        ]
+    },
+    {
+        "id": "func_extract_code",
+        "type": "function",
+        "z": "flow_main",
+        "name": "Extraer código y preparar payload",
+        "func": "// topic ejemplo: Clase/Iot/Cmos/ESP32-001\nvar parts = msg.topic.split(\"/\");\nvar codigo = parts[3] || \"\";\n\n// Suponemos que msg.payload ya es un objeto con temperatura y humedad\nvar temperatura = msg.payload.temperatura;\nvar humedad = msg.payload.humedad;\n\nmsg.payload = {\n    codigo: codigo,\n    temperatura: temperatura,\n    humedad: humedad\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 420,
+        "y": 140,
+        "wires": [
+            [
+                "gauge_temp",
+                "gauge_hum",
+                "func_store_all",
+                "debug_out"
+            ]
+        ]
+    },
+    {
+        "id": "gauge_temp",
+        "type": "ui_gauge",
+        "z": "flow_main",
+        "name": "Temperatura",
+        "group": "ui_group_main",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temp - {{msg.payload.codigo}}",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 680,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "gauge_hum",
+        "type": "ui_gauge",
+        "z": "flow_main",
+        "name": "Humedad",
+        "group": "ui_group_main",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Hum - {{msg.payload.codigo}}",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 680,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "func_store_all",
+        "type": "function",
+        "z": "flow_main",
+        "name": "Almacenar datos de todos sensores",
+        "func": "// Mantener estado global de todos los sensores\nvar allData = flow.get('allData') || {};\n\n// Actualizar con los nuevos datos\nallData[msg.payload.codigo] = {\n    temperatura: msg.payload.temperatura,\n    humedad: msg.payload.humedad\n};\n\n// Guardar de nuevo\nflow.set('allData', allData);\n\n// Enviar todo el estado para mostrar en tabla\nmsg.payload = allData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 680,
+        "y": 220,
+        "wires": [
+            [
+                "ui_template_table"
+            ]
+        ]
+    },
+    {
+        "id": "ui_template_table",
+        "type": "ui_template",
+        "z": "flow_main",
+        "group": "ui_group_main",
+        "name": "Tabla datos sensores",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "<div>\n  <h3>Datos de estudiantes</h3>\n  <table border=\"1\" style=\"width:100%;text-align:center;\">\n    <thead>\n      <tr>\n        <th>Código</th>\n        <th>Temperatura (°C)</th>\n        <th>Humedad (%)</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr ng-repeat=\"(codigo, datos) in msg.payload\">\n        <td>{{codigo}}</td>\n        <td>{{datos.temperatura}}</td>\n        <td>{{datos.humedad}}</td>\n      </tr>\n    </tbody>\n  </table>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 680,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "debug_out",
+        "type": "debug",
+        "z": "flow_main",
+        "name": "Output completo",
+        "active": true,
+        "console": false,
+        "complete": "payload",
+        "x": 680,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ui_tab_main",
+        "type": "ui_tab",
+        "z": "",
+        "name": "IoT Dashboard",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ui_group_main",
+        "type": "ui_group",
+        "z": "",
+        "name": "Datos Sensores",
+        "tab": "ui_tab_main",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "HiveMQ Broker",
+        "broker": "TU_DIRECCION_HIVEMQ",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "sessionExpiry": ""
+    }
+]

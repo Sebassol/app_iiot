@@ -1,0 +1,285 @@
+[
+    {
+        "id": "7bbb9254c033f421",
+        "type": "tab",
+        "label": "Flujo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ui_tab_main",
+        "type": "ui_tab",
+        "name": "IoT Dashboard",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ui_group_main",
+        "type": "ui_group",
+        "name": "Datos Sensores",
+        "tab": "ui_tab_main",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Broker",
+        "broker": "TU_DIRECCION_HIVEMQ",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "sessionExpiry": ""
+    },
+    {
+        "id": "68291a8686598f4f",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "mqtt_in_receipt",
+        "type": "mqtt in",
+        "z": "7bbb9254c033f421",
+        "name": "MQTT - Clase/Iot/Cmos/#",
+        "topic": "Clase/Iot/Cmos/#",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 140,
+        "wires": [
+            [
+                "func_extract_code"
+            ]
+        ]
+    },
+    {
+        "id": "func_extract_code",
+        "type": "function",
+        "z": "7bbb9254c033f421",
+        "name": "Extraer código y preparar payload",
+        "func": "// topic ejemplo: Clase/Iot/Cmos/ESP32-001\nvar parts = msg.topic.split(\"/\");\nvar codigo = parts[3] || \"\";\n\n// Suponemos que msg.payload ya es un objeto con temperatura y humedad\nvar temperatura = msg.payload.temperatura;\nvar humedad = msg.payload.humedad;\n\nmsg.payload = {\n    codigo: codigo,\n    temperatura: temperatura,\n    humedad: humedad\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 280,
+        "y": 320,
+        "wires": [
+            [
+                "gauge_temp",
+                "gauge_hum",
+                "func_store_all",
+                "debug_out"
+            ]
+        ]
+    },
+    {
+        "id": "gauge_temp",
+        "type": "ui_gauge",
+        "z": "7bbb9254c033f421",
+        "name": "Temperatura",
+        "group": "ui_group_main",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temp - {{msg.payload.codigo}}",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 680,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "gauge_hum",
+        "type": "ui_gauge",
+        "z": "7bbb9254c033f421",
+        "name": "Humedad",
+        "group": "ui_group_main",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Hum - {{msg.payload.codigo}}",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 680,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "func_store_all",
+        "type": "function",
+        "z": "7bbb9254c033f421",
+        "name": "Almacenar datos de todos sensores",
+        "func": "// Mantener estado global de todos los sensores\nvar allData = flow.get('allData') || {};\n\n// Actualizar con los nuevos datos\nallData[msg.payload.codigo] = {\n    temperatura: msg.payload.temperatura,\n    humedad: msg.payload.humedad\n};\n\n// Guardar de nuevo\nflow.set('allData', allData);\n\n// Enviar todo el estado para mostrar en tabla\nmsg.payload = allData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 680,
+        "y": 220,
+        "wires": [
+            [
+                "ui_template_table"
+            ]
+        ]
+    },
+    {
+        "id": "ui_template_table",
+        "type": "ui_template",
+        "z": "7bbb9254c033f421",
+        "group": "ui_group_main",
+        "name": "Tabla datos sensores",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "<div>\n  <h3>Datos de estudiantes</h3>\n  <table border=\"1\" style=\"width:100%;text-align:center;\">\n    <thead>\n      <tr>\n        <th>Código</th>\n        <th>Temperatura (°C)</th>\n        <th>Humedad (%)</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr ng-repeat=\"(codigo, datos) in msg.payload\">\n        <td>{{codigo}}</td>\n        <td>{{datos.temperatura}}</td>\n        <td>{{datos.humedad}}</td>\n      </tr>\n    </tbody>\n  </table>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 680,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "debug_out",
+        "type": "debug",
+        "z": "7bbb9254c033f421",
+        "name": "Output completo",
+        "active": true,
+        "console": false,
+        "complete": "payload",
+        "x": 620,
+        "y": 280,
+        "wires": []
+    }
+]
